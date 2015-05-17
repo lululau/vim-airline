@@ -1,16 +1,37 @@
 " MIT License. Copyright (c) 2013-2015 Bailey Ling.
 " vim: et ts=2 sts=2 sw=2
 
+let s:number_map = &encoding == 'utf-8'
+      \ ? {
+      \ '0': '⁰',
+      \ '1': '¹',
+      \ '2': '²',
+      \ '3': '³',
+      \ '4': '⁴',
+      \ '5': '⁵',
+      \ '6': '⁶',
+      \ '7': '⁷',
+      \ '8': '⁸',
+      \ '9': '⁹'
+      \ }
+      \ : {}
+
+
 function! airline#extensions#tabline#formatters#unique_tail#format(bufnr, buffers)
+  let s:buf_index = index(a:buffers, a:bufnr) + 1
+  if s:buf_index > 9 && s:buf_index == len(a:buffers)
+    let s:buf_index = 0
+  endif
+  let s:buf_index = s:number_map[s:buf_index . '']
   let duplicates = {}
   let tails = {}
   let map = {}
   for nr in a:buffers
     let name = bufname(nr)
     if empty(name)
-      let map[nr] = '[No Name]'
+      let map[nr] = s:buf_index . '[No Name]'
     else
-      let tail = fnamemodify(name, ':t')
+      let tail = s:buf_index . fnamemodify(name, ':t')
       if has_key(tails, tail)
         let duplicates[nr] = nr
       endif

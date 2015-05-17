@@ -155,6 +155,10 @@ function! s:get_visible_buffers()
   return buffers
 endfunction
 
+function! airline#extensions#tabline#buffers#get_visible_buffers()
+  return s:get_visible_buffers()
+endfunction
+
 function! s:select_tab(buf_index)
   " no-op when called in the NERDTree buffer
   if exists('t:NERDTreeBufName') && bufname('%') == t:NERDTreeBufName
