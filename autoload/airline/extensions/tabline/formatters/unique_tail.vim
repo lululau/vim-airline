@@ -22,7 +22,7 @@ function! airline#extensions#tabline#formatters#unique_tail#format(bufnr, buffer
   if s:buf_index > 9 && s:buf_index == len(a:buffers)
     let s:buf_index = 0
   endif
-  let s:buf_index = s:number_map[s:buf_index . '']
+  let s:buf_index = get(s:number_map, s:buf_index . '', '')
   let duplicates = {}
   let tails = {}
   let map = {}
